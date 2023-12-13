@@ -53,6 +53,10 @@ class Kit
 		throw new Error f+ "Route-Module '#{name}' requires service '#{n}'" for n in needs when n not of @services
 		_t= @
 		_a= args ? []
-		@routes[name]= new constructor _t, _a...
+		if constructor.es6 is true
+			`this.routes[name]= new constructor( _t, ..._a)`
+		else
+			@routes[name]= new constructor _t, _a...
+		null
 
 exports.Kit= Kit
