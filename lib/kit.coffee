@@ -36,7 +36,10 @@ class Kit
 		throw new Error f+ "Service-Module '#{name}' requires service '#{n}'" for n in needs when n not of @services
 		_t= @
 		_a= args ? []
-		@services[ name]= new constructor _t, _a...
+		if constructor.es6?
+			`this.services[name]= new constructor( _t, ..._a)`
+		else
+			@services[ name]= new constructor _t, _a...
 		_log= @services[ name].log if name is 'logger'
 		return @services[ name]
 
